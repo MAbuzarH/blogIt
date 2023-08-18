@@ -13,7 +13,7 @@ const Header = () => {
         </Link>
         <div>
           <ul className="hidden lg:inline-flex gap-8 uppercase text-sm font-semibold">
-            <li className="text-primaryColor hover:text-secondaryColor cursor-pointer duration-300">Home</li>
+            <Link href={"/"}> <li className="text-primaryColor hover:text-secondaryColor cursor-pointer duration-300">Home</li></Link>
             <li className="text-primaryColor hover:text-secondaryColor cursor-pointer duration-300">Posts</li>
             <li className="text-primaryColor hover:text-secondaryColor cursor-pointer duration-300">Pages</li>
             <li className="text-primaryColor hover:text-secondaryColor cursor-pointer duration-300">Features</li>

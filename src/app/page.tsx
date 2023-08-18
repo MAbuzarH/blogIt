@@ -5,14 +5,10 @@ import { Post } from "../../typing";
 import Link from "next/link";
 import imageUrlBuilder from "@sanity/image-url";
 import { Image as sanityImage } from "sanity";
-
-const builder = imageUrlBuilder(Client);
-function urlFor(source: sanityImage) {
-  return builder.image(source);
-}
+import { getBlogData } from "@/lib/mock";
 
 export default async function Home() {
-  const data: Post[] = await getServersideProps();
+  const data: Post[] = await getBlogData();
   // console.log(data);
   return (
     <main className="min-h-[1500px]">
@@ -29,16 +25,16 @@ export default async function Home() {
             key={post._id}
             className="w-100 cursor-pointer"
             href={`/post/${post.slug.current}`}
-         
+
           >
-              
+
             <div className="border-[1px] border-seconderyColor border-opacity-40  h-[450px] group">
               <div className="h-3/5 w-full overflow-hidden">
                 <Image
                   width={380}
                   height={350}
                   alt="post img"
-                  src={`${urlFor(post.mainImage.asset)}`}
+                  src={`${post.mainImage}`}
                   className="w-full h-full object-cover brightness-75 group-hover:brightness-100 duration-300 group-hover:scale-110"
                 />
               </div>
@@ -47,7 +43,7 @@ export default async function Home() {
                   <p className="">{post.title}</p>
                   <img
                     className="w-12 h-12 rounded-full object-cover "
-                    src={`${urlFor(post.author.image)}`}
+                    src={`${post.author.image}`}
                     alt=""
                   />
                 </div>
@@ -64,18 +60,3 @@ export default async function Home() {
     </main>
   );
 }
-export const getServersideProps = async () => {
-  const query = `*[_type=="post"]{
-    _id,
-      title,
-      author->{
-        name,
-        image
-      },
-      description,
-      mainImage,
-      slug
-  }`;
-  const posts = await Client.fetch(query);
-  return posts;
-};
