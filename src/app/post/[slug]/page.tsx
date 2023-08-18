@@ -1,10 +1,10 @@
-import { getServersideProps } from '@/lib/mock';
+import { getSpecificBlogData } from '@/lib/mock';
 import Link from 'next/link';
 import React from 'react'
 
 export default async function page({ params }: { params: { slug: string } }) {
 
-  const data = await getServersideProps(params.slug);
+  const data = await getSpecificBlogData(params.slug);
   const reqdata = data[0]
   console.log('data', data[0])
   return (
