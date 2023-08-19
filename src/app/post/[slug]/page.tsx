@@ -1,61 +1,56 @@
-import { getSpecificBlogData } from '@/lib/mock';
-import Link from 'next/link';
-import React from 'react'
+import { getSpecificBlogData } from "@/lib/mock";
+import { PortableText } from "@portabletext/react";
+import Link from "next/link";
+import React from "react";
 
 export default async function page({ params }: { params: { slug: string } }) {
-
   const data = await getSpecificBlogData(params.slug);
-  const reqdata = data[0]
-  console.log('data', data[0])
+  const reqdata = data[0];
+  // console.log("data", data[0]);
   return (
     <>
-      <div className="bg-gray-100 min-h-screen">
-        {/* Header */}
-        <header className="bg-purple-800 text-white py-6">
-          <div className="container mx-auto text-center">
-            <h1 className="text-4xl font-semibold">{reqdata.title}</h1>
-          </div>
-        </header>
-
-        {/* Blog Content */}
-        <section className="container mx-auto mt-10 px-4">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <img
-              src={reqdata.mainImage}
-              alt="Blog"
-              className="rounded-md mb-4"
-            />
-            <h2 className="text-2xl font-semibold mb-2">Blog Title</h2>
-            <p className="text-gray-600 mb-4">
-              {reqdata.description}
-            </p>
-            <a href="#" className="text-purple-700 hover:underline">
-              Read More
-            </a>
-          </div>
-
-          {/* Blog Writer */}
-          <div className="bg-white p-6 mt-6 rounded-lg shadow-md flex items-center space-x-4">
-            <img
-              src={reqdata.author.image}
-              alt="Writer"
-              className="w-16 h-16 rounded-full"
-            />
-            <div>
-              <h3 className="text-lg font-semibold">{reqdata.author.name}</h3>
-              <p className="text-gray-500">Blogger and Enthusiast</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="bg-gray-900 text-white py-6 mt-10">
-          <div className="container mx-auto text-center">
-            <p>&copy; 2023 Beautiful Blog. All rights reserved.</p>
-          </div>
-        </footer>
+      {/* main image */}
+      <div>
+        <img
+          src={`${reqdata.mainImage}`}
+          alt="cover-Image"
+          className="w-full h-98 object-cover"
+        />
       </div>
-
+      {/* artical */}
+      <div className="max-w-3xl mx-auto ">
+        <article className="w-full mx-auto p-5 bg-seconderyColor/10">
+          <h1 className="font-medium text-[32px] text-primary border-b-[1px] border-b-cyan-800 mt-10 mb-3 ">
+            {reqdata.title}
+          </h1>
+          <h2
+            className="text-[18px] mb-2 text-gray-500
+          "
+          >
+            {reqdata.description}
+          </h2>
+          <div className="flex items-center gap-2">
+            <img
+              src={`${reqdata.author.image}`}
+              alt="author-image"
+              className="rounded-full w-12 h-12 object-cover bg-red-400"
+            />
+            <p className="text-base">
+              blog post by <span className="font-bold text-seconderyColor ">{reqdata.author.name}</span> - Published at{" "}
+              <span >
+                {new Date(reqdata.PublishedAt).toLocaleString()}
+              </span>{" "}
+            </p>
+          </div>
+          <div className="m-10">
+          <PortableText
+  content={reqdata.body}
+  projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "jjjj" }
+  dataset={process.env.SANITY_DATASET || 'production'}
+/>
+          </div>
+        </article>
+      </div>
     </>
-  )
+  );
 }

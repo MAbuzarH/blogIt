@@ -50,7 +50,7 @@ export default async function Home() {
 
                 <h1 className="px-2 py-4 text-base">
                   {post.description.substring(0, 60)}... by -
-                  <span >{post.author.name}</span>
+                  <span className="font-semibold ">{post.author.name}</span>
                 </h1>
               </div>
             </div>

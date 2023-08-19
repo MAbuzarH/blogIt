@@ -10,7 +10,8 @@ export const getSpecificBlogData = async (slug:any) => {
         },  
         description,
           "mainImage": mainImage.asset->url,
-        slug
+        slug,
+        boady,
     }`;
     const posts = await Client.fetch(query);
     return posts;
