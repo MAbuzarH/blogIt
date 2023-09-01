@@ -1,6 +1,10 @@
 import { getSpecificBlogData } from '@/lib/mock';
 import Link from 'next/link';
 import React from 'react'
+import { PortableText } from '@portabletext/react'
+
+
+
 
 export default async function page({ params }: { params: { slug: string } }) {
 
@@ -13,13 +17,13 @@ export default async function page({ params }: { params: { slug: string } }) {
         {/* Header */}
         <header className="bg-purple-800 text-white py-6">
           <div className="container mx-auto text-center">
-            <h1 className="text-4xl font-semibold">{reqdata.title}</h1>
+            <h1 className="text-4xl ">{reqdata.title}</h1>
           </div>
         </header>
 
         {/* Blog Content */}
-        <section className="container mx-auto mt-10 px-4">
-          <div className="bg-white p-6 rounded-lg shadow-md">
+        <section className="container mx-auto mt-10 px-20">
+          <div className="bg-white p-6 px-20 rounded-lg shadow-md">
             <img
               src={reqdata.mainImage}
               alt="Blog"
@@ -32,6 +36,21 @@ export default async function page({ params }: { params: { slug: string } }) {
             <a href="#" className="text-purple-700 hover:underline">
               Read More
             </a>
+            <PortableText
+              value={reqdata.body}
+              components={{
+                block: {
+                  // Customize block types with ease
+                  h1: ({ children }) => <h1 className="text-4xl font-semibold ">{children}</h1>,
+
+                  // Same applies to custom styles
+                  customHeading: ({ children }) => (
+                    <h2 className="text-lg text-primary text-purple-700">{children}</h2>
+                  ),
+                },
+              }}
+
+            />
           </div>
 
           {/* Blog Writer */}

@@ -8,6 +8,7 @@ export const getSpecificBlogData = async (slug:any) => {
           name,
           "image": image.asset->url,
         },  
+        body,
         description,
           "mainImage": mainImage.asset->url,
         slug
