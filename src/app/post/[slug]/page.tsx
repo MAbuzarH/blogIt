@@ -1,20 +1,56 @@
+import { RichTextCom } from "@/app/components/RichTextCom";
 import { getSpecificBlogData } from "@/lib/mock";
-import { PortableText } from "@portabletext/react";
+import { PortableText, toPlainText } from "@portabletext/react";
 import Link from "next/link";
 import React from "react";
+import { urlForImage } from "../../../../sanity/lib/image";
+// import {Post} from '../../../../typing'
 
-export default async function page({ params }: { params: { slug: string } }) {
-  const data = await getSpecificBlogData(params.slug);
-  const reqdata = data[0];
-  // console.log("data", data[0]);
+
+
+
+export default async function Page({ params }: { params: { slug: string } }) {
+ 
+ 
+  const data: Post[] = await getSpecificBlogData(params.slug);
+  const reqdata: Post = data[0];
+
+  function formatPublishedDate(publishedAt:Date) {
+    try {
+      const rawDate = new Date(publishedAt);
+    
+  
+      return rawDate.toLocaleString("en-US",{
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        // second: "2-digit",
+        // timeZoneName: "short",
+      } );
+    } catch (error) {
+      // Handle parsing errors here
+      // console.error("Error parsing date:", error);
+      return "Invalid Date";
+    }
+  }
+
+  const formattedDate = formatPublishedDate(reqdata.publishedAt);
+
+  // const[h1,blog] = reqdata.body;
+  // console.log(data[0].body);
+  // console.log(reqdata.author)
+
+  
   return (
     <>
       {/* main image */}
       <div>
         <img
-          src={`${reqdata.mainImage}`}
+          src={`${reqdata?.mainImage}`}
           alt="cover-Image"
-          className="w-full h-98 object-cover"
+          className="w-full h-60 object-cover"
         />
       </div>
       {/* artical */}
@@ -36,18 +72,18 @@ export default async function page({ params }: { params: { slug: string } }) {
               className="rounded-full w-12 h-12 object-cover bg-red-400"
             />
             <p className="text-base">
-              blog post by <span className="font-bold text-seconderyColor ">{reqdata.author.name}</span> - Published at{" "}
-              <span >
-                {new Date(reqdata.PublishedAt).toLocaleString()}
+              blog post by{" "}
+              <span className="font-bold text-seconderyColor ">
+                {reqdata.author.name}
+              </span>{" "}
+              - Published at{" "}
+              <span>
+                {formattedDate}
               </span>{" "}
             </p>
           </div>
-          <div className="m-10">
-          <PortableText
-  content={reqdata.body}
-  projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "jjjj" }
-  dataset={process.env.SANITY_DATASET || 'production'}
-/>
+          <div className="m-10 flex flex-col">
+            <PortableText value={reqdata?.body} components={RichTextCom} />
           </div>
         </article>
       </div>

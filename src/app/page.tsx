@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Banner, BannerBottom } from "./components";
-import { Client } from "@/lib/Client";
-import { Post } from "../../typing";
+import { Banner,BannerBottom } from "./components";
 import Link from "next/link";
 import imageUrlBuilder from "@sanity/image-url";
 import { Image as sanityImage } from "sanity";
@@ -19,15 +17,12 @@ export default async function Home() {
       >
         <BannerBottom />
       </div>
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6  py-6 px-4 ">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 sm:mt-16  py-6 px-4 ">
         {data?.map((post) => (
           <Link
             key={post._id}
             className="w-100 cursor-pointer"
-            href={`/post/${post.slug.current}`}
-
-          >
-
+            href={`/post/${post.slug.current}`}>
             <div className="border-[1px] border-seconderyColor border-opacity-40  h-[450px] group">
               <div className="h-3/5 w-full overflow-hidden">
                 <Image

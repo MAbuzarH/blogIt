@@ -7,11 +7,12 @@ export const getSpecificBlogData = async (slug:any) => {
         author->{
           name,
           "image": image.asset->url,
-        },  
+        }, 
+        publishedAt, 
         description,
           "mainImage": mainImage.asset->url,
         slug,
-        boady,
+        body,
     }`;
     const posts = await Client.fetch(query);
     return posts;
@@ -25,6 +26,7 @@ export const getSpecificBlogData = async (slug:any) => {
           name,
           "image": image.asset->url,
         },
+        publishedAt,
         description,
         "mainImage": mainImage.asset->url,
         slug
