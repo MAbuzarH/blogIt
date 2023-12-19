@@ -19,7 +19,7 @@ export const RichTextCom = {
       },
         callToAction: ({value, isInline}:any) =>
         isInline ? (
-          <a href={value.url}>{value.text}</a>
+          <a className="text-blue-800" href={value.url}>{value.text}</a>
         ) : (
           <div className="callToAction">{value.text}</div>
         ),
@@ -43,7 +43,7 @@ export const RichTextCom = {
       link: ({ children, value }: any) => {
         const rel = !value.href?.startsWith('/') ? 'noreferrer noopener' : undefined;
         return (
-          <a href={value.href} rel={rel}>
+          <a className="text-blue-900" href={value.href} rel={rel}>
             {children}
           </a>
         );

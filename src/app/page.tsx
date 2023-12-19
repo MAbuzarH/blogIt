@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Banner,BannerBottom } from "./components";
+import { Banner, BannerBottom } from "./components";
 import Link from "next/link";
 import imageUrlBuilder from "@sanity/image-url";
 import { Image as sanityImage } from "sanity";
@@ -17,20 +17,22 @@ export default async function Home() {
       >
         <BannerBottom />
       </div>
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 sm:mt-16  py-6 px-4 ">
+      {/* post cards */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 sm:mt-16  py-6 px-4  ">
         {data?.map((post) => (
           <Link
             key={post._id}
             className="w-100 cursor-pointer"
-            href={`/post/${post.slug.current}`}>
-            <div className="border-[1px] border-seconderyColor border-opacity-40  h-[450px] group">
+            href={`/post/${post.slug.current}`}
+          >
+            <div className="border-[1px] border-seconderyColor border-opacity-40  h-[450px] group rounded-3xl">
               <div className="h-3/5 w-full overflow-hidden">
                 <Image
                   width={380}
                   height={350}
                   alt="post img"
                   src={`${post.mainImage}`}
-                  className="w-full h-full object-cover brightness-75 group-hover:brightness-100 duration-300 group-hover:scale-110"
+                  className="w-full h-full object-cover brightness-75 group-hover:brightness-100 rounded-t-3xl duration-300 group-hover:scale-110"
                 />
               </div>
               <div className="h-2/5 w-full flex flex-col justify-center">
